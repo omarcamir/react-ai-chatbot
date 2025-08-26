@@ -1,0 +1,35 @@
+@import "tailwindcss";
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@theme {
+  --color-main-color:  #7b3306;
+  --color-secondary-color: #00ff00;
+}
+
+@custom-variant hover (&:hover);
+@utility container {
+  padding-inline: 0.5rem; /* DEFAULT */
+  margin-inline: auto;
+
+  @variant sm {
+    padding-inline: 0.5rem;
+  }
+
+  @variant md {
+    padding-inline: 1rem;
+  }
+  @variant lg {
+    padding-inline: 4rem;
+  }
+
+  @variant xl {
+    padding-inline: 5rem;
+  }
+}
