@@ -6,16 +6,19 @@ import Logo from "./Logo";
 
 const ChatContainer = () => {
   const [messages, setMessages] = useState(Mesgs);
+  const sendMessage = (newMessage) => {
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
+  };
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col">
-      <header className=" bg-white/60 backdrop-blur-md shadow-md sticky top-0 z-10 py-1">
+      <header className=" bg-white/40 backdrop-blur-md shadow-md sticky top-0 z-10 py-1">
         <Logo />
       </header>
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1 overflow-y-auto py-2">
         <Chat messages={messages} />
       </main>
-      <footer className="p-2 bg-white/60 backdrop-blur-md sticky bottom-0 left-0 w-full z-10">
-        <ChatForm />
+      <footer className="p-2 bg-white/40 backdrop-blur-md sticky bottom-0 left-0 w-full z-10">
+        <ChatForm sendMessage={sendMessage} />
       </footer>
     </div>
   );
