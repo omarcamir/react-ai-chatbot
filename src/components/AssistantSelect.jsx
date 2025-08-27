@@ -7,7 +7,7 @@ const AssistantSelect = ({ assistant, setAssistant }) => {
     <select
       value={assistant}
       onChange={(e) => setAssistant(e.target.value)}
-      className="border rounded px-2 py-1 text-sm bg-white/60"
+      className="rounded px-2 py-1 text-sm border"
     >
       {options.map((opt) => (
         <option key={opt.value} value={opt.value}>

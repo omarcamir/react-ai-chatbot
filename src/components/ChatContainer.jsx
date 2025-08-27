@@ -6,16 +6,19 @@ import Logo from "./Logo";
 import { sendToGemini } from "../assistants/Gemini";
 import { sendToGPT } from "../assistants/GPTAssistant";
 import AssistantSelect from "./AssistantSelect";
+import Loader from "./Loader";
 
 const ChatContainer = () => {
   const [messages, setMessages] = useState([]);
   const [assistant, setAssistant] = useState("gemini");
+  const [loading, setLoading] = useState(false);
   const addMsg = (newMessage) => {
     setMessages((prevMessages) => [...prevMessages, newMessage]);
   };
 
   const sendMessage = async (newMessage) => {
     addMsg({ role: "user", content: newMessage });
+    setLoading(true);
 
     try {
       let text;
@@ -24,8 +27,10 @@ const ChatContainer = () => {
       } else {
         text = await sendToGPT(newMessage, "gpt-4o-mini");
       }
+      setLoading(false);
       addMsg({ role: "assistant", content: text });
     } catch (error) {
+      setLoading(false);
       addMsg({
         role: "error",
         content: error || "Error: Unable to fetch response.",
@@ -37,14 +42,15 @@ const ChatContainer = () => {
       <header className=" bg-white/40 backdrop-blur-md shadow-md sticky top-0 z-10 py-1">
         <div className="flex flex-col md:flex-row items-center justify-center gap-1 md:gap-5">
           <Logo />
-        <AssistantSelect assistant={assistant} setAssistant={setAssistant} />
+          <AssistantSelect assistant={assistant} setAssistant={setAssistant} />
         </div>
       </header>
-      <main className="flex-1 overflow-y-auto py-2">
+      <main className="flex-1 overflow-y-auto py-2 relative">
         <Chat messages={messages} />
+        {loading && <Loader />}
       </main>
       <footer className="p-2 bg-white/40 backdrop-blur-md sticky bottom-0 left-0 w-full z-10">
-        <ChatForm sendMessage={sendMessage} />
+        <ChatForm sendMessage={sendMessage} loading={loading} />
       </footer>
     </div>
   );

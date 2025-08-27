@@ -1,7 +1,7 @@
 import { useState } from "react";
 import SendIcon from "../../icons/SendIcon";
 
-const ChatForm = ({ sendMessage }) => {
+const ChatForm = ({ sendMessage, loading }) => {
   const [messageText, setMessageText] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -13,6 +13,7 @@ const ChatForm = ({ sendMessage }) => {
     <form className="flex items-center gap-2 mt-4 w-full">
       <textarea
         value={messageText}
+        disabled={loading}
         onChange={(e) => setMessageText(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === "Enter" && !e.shiftKey) {
@@ -26,8 +27,15 @@ const ChatForm = ({ sendMessage }) => {
       <button
         type="submit"
         onClick={handleSubmit}
-        disabled={!messageText || messageText.trim() === ""}
-        className="bg-main-color hover:bg-transparent border-2 border-transparent hover:border-main-color transition-all duration-200 p-2 w-12 h-12 rounded-full flex items-center justify-center group cursor-pointer"
+        disabled={!messageText || messageText.trim() === "" || loading}
+        className={`
+          p-2 w-12 h-12 rounded-full flex items-center justify-center group transition-all duration-200
+          ${
+            !messageText || messageText.trim() === "" || loading
+              ? "bg-gray-300 cursor-not-allowed opacity-50"
+              : "bg-main-color hover:bg-transparent border-2 border-transparent hover:border-main-color cursor-pointer"
+          }
+        `}
       >
         <SendIcon className=" text-white group-hover:text-main-color" />
       </button>
