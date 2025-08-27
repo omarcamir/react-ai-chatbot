@@ -11,9 +11,7 @@ const MessageBox = ({ message }) => {
           : "bg-gray-200 text-black self-start"
       }`}
     >
-      <p className="white">
-        <Markdown>{message.content}</Markdown>
-      </p>
+      <Markdown>{message.content}</Markdown>
     </div>
   );
 };

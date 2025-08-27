@@ -2,11 +2,10 @@ import { useState } from "react";
 // import { Mesgs } from "../utils/dummyData";
 import Chat from "./Chat";
 import ChatForm from "./ChatContent/ChatForm";
-import Logo from "./Logo";
 import { sendToGemini } from "../assistants/Gemini";
 import { sendToGPT } from "../assistants/GPTAssistant";
-import AssistantSelect from "./AssistantSelect";
 import Loader from "./Loader";
+import Header from "./Header";
 
 const ChatContainer = () => {
   const [messages, setMessages] = useState([]);
@@ -39,12 +38,7 @@ const ChatContainer = () => {
   };
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col">
-      <header className=" bg-white/40 backdrop-blur-md shadow-md sticky top-0 z-10 py-1">
-        <div className="flex flex-col md:flex-row items-center justify-center gap-1 md:gap-5">
-          <Logo />
-          <AssistantSelect assistant={assistant} setAssistant={setAssistant} />
-        </div>
-      </header>
+      <Header assistant={assistant} setAssistant={setAssistant} />
       <main className="flex-1 overflow-y-auto py-2 relative">
         <Chat messages={messages} />
         {loading && <Loader />}
