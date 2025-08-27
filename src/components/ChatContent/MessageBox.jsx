@@ -7,7 +7,7 @@ const MessageBox = ({ message }) => {
         message.role === "user"
           ? "bg-main-color text-white self-end"
           : message.role === "error"
-          ? "bg-red-200 text-black self-start"
+          ? "bg-red-200 text-black self-start w-[85%]"
           : "bg-gray-200 text-black self-start"
       }`}
     >
