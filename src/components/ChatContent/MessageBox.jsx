@@ -1,3 +1,5 @@
+import Markdown from "react-markdown";
+
 const MessageBox = ({ message }) => {
   return (
     <div
@@ -9,7 +11,9 @@ const MessageBox = ({ message }) => {
           : "bg-gray-200 text-black self-start"
       }`}
     >
-      <p className="white">{message.content}</p>
+      <p className="white">
+        <Markdown>{message.content}</Markdown>
+      </p>
     </div>
   );
 };
