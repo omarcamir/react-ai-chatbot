@@ -40,7 +40,7 @@ const ChatContainer = () => {
     <div className="bg-gray-100 min-h-screen flex flex-col">
       <Header assistant={assistant} setAssistant={setAssistant} />
       <main className="flex-1 overflow-y-auto py-2 relative">
-        <Chat messages={messages} />
+        <Chat messages={messages} loading={loading} />
         {loading && <Loader />}
       </main>
       <footer className="p-2 bg-white/40 backdrop-blur-md sticky bottom-0 left-0 w-full z-10">

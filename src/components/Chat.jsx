@@ -1,10 +1,16 @@
+import { useEffect, useRef } from "react";
 import MessageBox from "./ChatContent/MessageBox";
+import MessagePlaceholder from "./placeholders/MessagePlaceholder";
 
-const Chat = ({ messages }) => {
+const Chat = ({ messages, loading }) => {
   const welcomeMessage = {
     role: "assistant",
     content: "Hello! How can I assist you today?",
   };
+  const messagesEndRef = useRef(null);
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   return (
     <div className="w-full h-full overflow-y-auto rounded-xl py-6 px-4 md:px-6">
@@ -16,6 +22,8 @@ const Chat = ({ messages }) => {
             <MessageBox key={index} message={msg} />
           ))
         )}
+        {loading && <MessagePlaceholder />}
+        <div ref={messagesEndRef}></div>
       </div>
     </div>
   );
