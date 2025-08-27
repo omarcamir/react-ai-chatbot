@@ -1,19 +1,23 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SendIcon from "../../icons/SendIcon";
 
 const ChatForm = ({ sendMessage, loading }) => {
   const [messageText, setMessageText] = useState("");
+  const isDisabled = messageText.trim() === "" || loading;
+  const textAreaRef = useRef(null);
+  useEffect(() => {
+    textAreaRef.current?.focus();
+  }, []);
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
     sendMessage(messageText);
     setMessageText("");
   };
   return (
     <form className="flex items-center gap-2 mt-4 w-full">
       <textarea
+        ref={textAreaRef}
         value={messageText}
-        disabled={loading}
         onChange={(e) => setMessageText(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === "Enter" && !e.shiftKey) {
@@ -27,11 +31,11 @@ const ChatForm = ({ sendMessage, loading }) => {
       <button
         type="submit"
         onClick={handleSubmit}
-        disabled={!messageText || messageText.trim() === "" || loading}
+        disabled={isDisabled}
         className={`
           p-2 w-12 h-12 rounded-full flex items-center justify-center group transition-all duration-200
           ${
-            !messageText || messageText.trim() === "" || loading
+            isDisabled
               ? "bg-gray-300 cursor-not-allowed opacity-50"
               : "bg-main-color hover:bg-transparent border-2 border-transparent hover:border-main-color cursor-pointer"
           }
