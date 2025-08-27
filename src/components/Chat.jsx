@@ -1,4 +1,4 @@
-import MessageBox from "./ChatContent/Messagebox";
+import MessageBox from "./ChatContent/MessageBox";
 
 const Chat = ({ messages }) => {
   const welcomeMessage = {

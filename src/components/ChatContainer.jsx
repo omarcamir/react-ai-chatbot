@@ -4,9 +4,12 @@ import Chat from "./Chat";
 import ChatForm from "./ChatContent/ChatForm";
 import Logo from "./Logo";
 import { sendToGemini } from "../assistants/Gemini";
+import { sendToGPT } from "../assistants/GPTAssistant";
+import AssistantSelect from "./AssistantSelect";
 
 const ChatContainer = () => {
   const [messages, setMessages] = useState([]);
+  const [assistant, setAssistant] = useState("gemini");
   const addMsg = (newMessage) => {
     setMessages((prevMessages) => [...prevMessages, newMessage]);
   };
@@ -15,7 +18,12 @@ const ChatContainer = () => {
     addMsg({ role: "user", content: newMessage });
 
     try {
-      const text = await sendToGemini(newMessage, "gemini-2.5-flash");
+      let text;
+      if (assistant === "gemini") {
+        text = await sendToGemini(newMessage, "gemini-2.5-flash");
+      } else {
+        text = await sendToGPT(newMessage, "gpt-4o-mini");
+      }
       addMsg({ role: "assistant", content: text });
     } catch (error) {
       addMsg({
@@ -27,7 +35,10 @@ const ChatContainer = () => {
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col">
       <header className=" bg-white/40 backdrop-blur-md shadow-md sticky top-0 z-10 py-1">
-        <Logo />
+        <div className="flex flex-col md:flex-row items-center justify-center gap-1 md:gap-5">
+          <Logo />
+        <AssistantSelect assistant={assistant} setAssistant={setAssistant} />
+        </div>
       </header>
       <main className="flex-1 overflow-y-auto py-2">
         <Chat messages={messages} />
