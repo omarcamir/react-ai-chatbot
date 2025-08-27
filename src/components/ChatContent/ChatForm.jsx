@@ -1,12 +1,12 @@
 import { useState } from "react";
-import SendIcon from "../../../public/svg/sendIcon";
+import SendIcon from "../../icons/SendIcon";
 
 const ChatForm = ({ sendMessage }) => {
   const [messageText, setMessageText] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission logic here
-    sendMessage({ role: "user", content: messageText });
+    sendMessage(messageText);
     setMessageText("");
   };
   return (

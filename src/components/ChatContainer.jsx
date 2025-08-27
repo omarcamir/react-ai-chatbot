@@ -1,13 +1,28 @@
 import { useState } from "react";
-import { Mesgs } from "../utils/dummyData";
+// import { Mesgs } from "../utils/dummyData";
 import Chat from "./Chat";
 import ChatForm from "./ChatContent/ChatForm";
 import Logo from "./Logo";
+import { sendToGemini } from "../assistants/Gemini";
 
 const ChatContainer = () => {
-  const [messages, setMessages] = useState(Mesgs);
-  const sendMessage = (newMessage) => {
+  const [messages, setMessages] = useState([]);
+  const addMsg = (newMessage) => {
     setMessages((prevMessages) => [...prevMessages, newMessage]);
+  };
+
+  const sendMessage = async (newMessage) => {
+    addMsg({ role: "user", content: newMessage });
+
+    try {
+      const text = await sendToGemini(newMessage, "gemini-2.5-flash");
+      addMsg({ role: "assistant", content: text });
+    } catch (error) {
+      addMsg({
+        role: "error",
+        content: error || "Error: Unable to fetch response.",
+      });
+    }
   };
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col">
