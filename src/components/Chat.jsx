@@ -9,6 +9,7 @@ const Chat = ({ messages, loading }) => {
   };
   const messagesEndRef = useRef(null);
   useEffect(() => {
+    if (messages.length <= 1) return;
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
