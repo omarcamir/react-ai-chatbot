@@ -41,7 +41,7 @@ const ChatContainer = () => {
       <Header assistant={assistant} setAssistant={setAssistant} />
       <main className="flex-1 overflow-y-auto py-2 relative">
         <Chat messages={messages} loading={loading} />
-        {loading && <Loader />}
+        {/* {loading && <Loader />} */}
       </main>
       <footer className="p-2 bg-white/40 backdrop-blur-md sticky bottom-0 left-0 w-full z-10">
         <ChatForm sendMessage={sendMessage} loading={loading} />
